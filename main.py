@@ -3,13 +3,19 @@
 class Query:
     def __init__(self, query):
         self.type = query[0]
-        self.number = int(query[1])
+        num = query[1]
+        while len(num) > 1 and num[0] == '0':
+            num = num[1:]
+        if len(num) <=7:
+            self.number = int(num)
         if self.type == 'add':
-            self.name = query[2]
+            if query[2].isalpha() and query[2] != "not found" and len(query[2])<=15 and query[2] != "":
+                self.name = query[2]
 
 def read_queries():
     n = int(input())
-    return [Query(input().split()) for i in range(n)]
+    if n>=1 and n<=105:
+        return [Query(input().split()) for i in range(n)]
 
 def write_responses(result):
     print('\n'.join(result))
